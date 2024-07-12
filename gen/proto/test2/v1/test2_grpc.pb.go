@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Test2Service_Hello1_FullMethodName = "/test2.Test2Service/Hello1"
+	Test2Service_Hello2_FullMethodName = "/test2.Test2Service/Hello2"
 )
 
 // Test2ServiceClient is the client API for Test2Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type Test2ServiceClient interface {
-	Hello1(ctx context.Context, in *Hello2Request, opts ...grpc.CallOption) (*Hello2Response, error)
+	Hello2(ctx context.Context, in *Hello2Request, opts ...grpc.CallOption) (*Hello2Response, error)
 }
 
 type test2ServiceClient struct {
@@ -37,9 +37,9 @@ func NewTest2ServiceClient(cc grpc.ClientConnInterface) Test2ServiceClient {
 	return &test2ServiceClient{cc}
 }
 
-func (c *test2ServiceClient) Hello1(ctx context.Context, in *Hello2Request, opts ...grpc.CallOption) (*Hello2Response, error) {
+func (c *test2ServiceClient) Hello2(ctx context.Context, in *Hello2Request, opts ...grpc.CallOption) (*Hello2Response, error) {
 	out := new(Hello2Response)
-	err := c.cc.Invoke(ctx, Test2Service_Hello1_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Test2Service_Hello2_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *test2ServiceClient) Hello1(ctx context.Context, in *Hello2Request, opts
 // All implementations must embed UnimplementedTest2ServiceServer
 // for forward compatibility
 type Test2ServiceServer interface {
-	Hello1(context.Context, *Hello2Request) (*Hello2Response, error)
+	Hello2(context.Context, *Hello2Request) (*Hello2Response, error)
 	mustEmbedUnimplementedTest2ServiceServer()
 }
 
@@ -58,8 +58,8 @@ type Test2ServiceServer interface {
 type UnimplementedTest2ServiceServer struct {
 }
 
-func (UnimplementedTest2ServiceServer) Hello1(context.Context, *Hello2Request) (*Hello2Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Hello1 not implemented")
+func (UnimplementedTest2ServiceServer) Hello2(context.Context, *Hello2Request) (*Hello2Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Hello2 not implemented")
 }
 func (UnimplementedTest2ServiceServer) mustEmbedUnimplementedTest2ServiceServer() {}
 
@@ -74,20 +74,20 @@ func RegisterTest2ServiceServer(s grpc.ServiceRegistrar, srv Test2ServiceServer)
 	s.RegisterService(&Test2Service_ServiceDesc, srv)
 }
 
-func _Test2Service_Hello1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Test2Service_Hello2_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Hello2Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(Test2ServiceServer).Hello1(ctx, in)
+		return srv.(Test2ServiceServer).Hello2(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Test2Service_Hello1_FullMethodName,
+		FullMethod: Test2Service_Hello2_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(Test2ServiceServer).Hello1(ctx, req.(*Hello2Request))
+		return srv.(Test2ServiceServer).Hello2(ctx, req.(*Hello2Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +100,8 @@ var Test2Service_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*Test2ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Hello1",
-			Handler:    _Test2Service_Hello1_Handler,
+			MethodName: "Hello2",
+			Handler:    _Test2Service_Hello2_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
